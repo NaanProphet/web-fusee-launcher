@@ -47,8 +47,13 @@
       <p>
         <input type="radio" name="payload" id="fusee.bin" value="fusee.bin" checked>
         <label for="fusee.bin">Example payload (fusee.bin)</label>
+        <input type="radio" name="payload" id="fusee-test.bin" value="fusee-test.bin" checked>
+        <label for="fusee-test.bin">Test payload (fusee-test.bin)</label>
       </p>
-
+      <p>
+        <input type="radio" name="payload" id="hekate.bin" value="hekate.bin">
+        <label for="hekate.bin">Hekate 6.2.1 bootloader (hekate.bin)</label>
+      </p>
       <p>
         <input type="radio" name="payload" id="uploaded" value="uploaded">
         <label for="uploaded">Upload payload:</label>
@@ -63,6 +68,7 @@
   <textarea cols="80" rows="12" id="output"></textarea>
 
   <script src="./fusee.bin.js"></script>
+  <script src="./fusee-test.bin.js"></script>  <script src="./hekate.bin.js"></script>
   <script src="./main.js"></script>
 </body>
 
