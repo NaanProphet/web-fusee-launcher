@@ -113,7 +113,7 @@ document.getElementById("goButton").addEventListener("click", async () => {
   logOutput(`Preparing to launch ${payloadType}...`);
 
   let payload;
-  if (payloadType === "fusee.bin") {
+  if (payloadType === "fusee-ktemkin.bin") {
     payload = fusee;
   } else if (payloadType === "fusee-test.bin") {
       payload = fusee_test;
