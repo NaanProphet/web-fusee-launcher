@@ -4,9 +4,29 @@
 <head>
   <meta charset="utf-8">
   <title>WebFG</title>
+  <style>
+    .compatibility-warning {
+      background-color: #ffdddd;
+      color: #990000;
+      padding: 15px;
+      margin-bottom: 20px;
+      border: 1px solid #990000;
+      border-radius: 4px;
+      font-family: Arial, sans-serif;
+    }
+    .compatibility-warning h3 {
+      margin-top: 0;
+    }
+  </style>
 </head>
 
 <body>
+  <!-- Compatibility warning banner (hidden by default) -->
+  <div id="compatibilityWarning" class="compatibility-warning" style="display: none;">
+    <h3>⚠️ Compatibility Warning</h3>
+    <div id="warningMessage"></div>
+  </div>
+
   <h1>Web Fusée Launcher</h1>
   <p>Fusee Launcher ported to JavaScript using WebUSB.</p>
   <p>
@@ -47,12 +67,14 @@
       <p>
         <input type="radio" name="payload" id="fusee.bin" value="fusee.bin" checked>
         <label for="fusee.bin">Example payload (fusee.bin)</label>
+      </p>
+      <p>
         <input type="radio" name="payload" id="fusee-test.bin" value="fusee-test.bin" checked>
-        <label for="fusee-test.bin">Test payload (fusee-test.bin)</label>
+        <label for="fusee-test.bin">Modern test payload (fusee-test.bin)</label>
       </p>
       <p>
         <input type="radio" name="payload" id="hekate.bin" value="hekate.bin">
-        <label for="hekate.bin">Hekate 6.2.2 bootloader (hekate.bin)</label>
+        <label for="hekate.bin">Hekate bootloader (hekate.bin)</label>
       </p>
       <p>
         <input type="radio" name="payload" id="uploaded" value="uploaded">
@@ -67,8 +89,42 @@
   <h3>Result:</h3>
   <textarea cols="80" rows="12" id="output"></textarea>
 
+  <!-- Browser and OS detection script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const warningBanner = document.getElementById('compatibilityWarning');
+      const warningMessage = document.getElementById('warningMessage');
+      
+      // Check if browser is Chrome
+      const isChrome = /Chrome/.test(navigator.userAgent) && !/Chromium|Edge|OPR|Samsung/.test(navigator.userAgent);
+      
+      // Check if OS is Windows
+      const isWindows = /Windows/.test(navigator.userAgent);
+      
+      // Show warning if not Chrome or if using Windows
+      if (!isChrome || isWindows) {
+        warningMessage.innerHTML = ""; // Clear any existing content
+        
+        if (!isChrome) {
+          const nonChromeMessage = document.createElement('p');
+          nonChromeMessage.textContent = "This application requires Chrome. Other browsers do not support the WebUSB functionality needed.";
+          warningMessage.appendChild(nonChromeMessage);
+        }
+        
+        if (isWindows) {
+          const windowsMessage = document.createElement('p');
+          windowsMessage.textContent = "This application does not work on Windows due to Chrome's WebUSB implementation limitations.";
+          warningMessage.appendChild(windowsMessage);
+        }
+        
+        warningBanner.style.display = "block";
+      }
+    });
+  </script>
+
   <script src="./fusee.bin.js"></script>
-  <script src="./fusee-test.bin.js"></script>  <script src="./hekate.bin.js"></script>
+  <script src="./fusee-test.bin.js"></script>
+  <script src="./hekate.bin.js"></script>
   <script src="./main.js"></script>
 </body>
 
